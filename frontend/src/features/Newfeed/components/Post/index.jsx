@@ -1,18 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Col, Row } from "antd";
+import { Col, Row, Tag } from "antd";
 import Title from "antd/lib/typography/Title";
 import "./styles.scss";
 import { convertDate } from "utils";
 import moment from "moment";
+import CommentList from "../CommentList";
+
 Post.propTypes = {
   post: PropTypes.object,
 };
+
+const randomColor = (arr) => {
+  const randIdx = Math.floor(Math.random() * arr.length);
+  return arr[randIdx];
+};
+
 function Post({ post }) {
-  const { title, created_at, owner, content } = post;
+  const { title, created_at, owner, content, tags } = post;
+  const colorList = [
+    "red",
+    "geekblue",
+    "lime",
+    "orange",
+    "magenta",
+    "cyan",
+    "green",
+    "purple",
+  ];
   const createdFormat = convertDate(created_at);
-  const foreignTime = moment(createdFormat).format("MMM DD, YYYY");
-  console.log(post);
+  const foreignTime = moment(new Date(createdFormat)).format("MMM DD, YYYY");
   return (
     <>
       <Row className="item" style={{ justifyContent: "center" }}>
@@ -27,7 +44,13 @@ function Post({ post }) {
           >{`Created at: ${foreignTime}`}</Title>
         </Col>
         <Col className="item__tag" span={12}>
-          <Title level={1}>{foreignTime}</Title>
+          {tags.map((idx) => {
+            return (
+              <Tag color={randomColor(colorList)} key={idx}>
+                {idx}
+              </Tag>
+            );
+          })}
         </Col>
         <Col className="item__content" span={24}>
           <Title level={3}>
@@ -36,6 +59,7 @@ function Post({ post }) {
               : content}
           </Title>
         </Col>
+        <CommentList owner={owner} />
       </Row>
     </>
   );
