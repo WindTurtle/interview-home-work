@@ -1,8 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Form, Input, Button } from "antd";
-
-LoginForm.propTypes = {};
+import { useState } from "react";
 
 const layout = {
   labelCol: {
@@ -18,35 +16,34 @@ const tailLayout = {
     span: 32,
   },
 };
-function LoginForm(props) {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+function LoginForm({ onSubmit }) {
+  const [values, setValues] = useState({
+    userName: "",
+    password: "",
+  });
+  const handleChangeInput = (event) => {
+    let { name, value } = event.target;
+    setValues({ ...values, [name]: value });
   };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  const handleSubmit = async () => {
+    if (onSubmit) {
+      await onSubmit(values);
+    }
   };
   return (
-    <Form
-      {...layout}
-      name="basic"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
+    <Form {...layout} name="basic">
       <Form.Item
         label="Username"
-        name="username"
+        name="userName"
         rules={[
           {
             required: true,
-            message: "Please input your username!",
+            message: "Please enter this field",
           },
         ]}
+        onChange={handleChangeInput}
       >
-        <Input />
+        <Input name="userName" />
       </Form.Item>
 
       <Form.Item
@@ -55,18 +52,19 @@ function LoginForm(props) {
         rules={[
           {
             required: true,
-            message: "Please input your password!",
+            message: "Please enter this field",
           },
         ]}
+        onChange={handleChangeInput}
       >
-        <Input.Password />
+        <Input.Password name="password" />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" onClick={handleSubmit} block>
           Submit
         </Button>
-        Or <a href="">register now!</a>
+        {/* Or <a href="#">register now!</a> */}
       </Form.Item>
     </Form>
   );

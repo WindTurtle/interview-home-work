@@ -16,7 +16,7 @@ Comment.propTypes = {
   comment: PropTypes.object,
 };
 function CommentItem({ comment }) {
-  const { id, created_at, content, owner } = comment;
+  const { id, created_at, content } = comment;
   const createdFormat = convertDate(created_at);
   const foreignTime = moment(new Date(createdFormat)).format("MMM DD, YYYY");
   const [likes, setLikes] = useState(0);

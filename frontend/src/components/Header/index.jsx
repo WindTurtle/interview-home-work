@@ -5,8 +5,9 @@ import { DeploymentUnitOutlined, UserOutlined } from "@ant-design/icons";
 import { Modal, Menu, Avatar, Row, Col, Space, Button } from "antd";
 import Text from "antd/lib/typography/Text";
 import Login from "features/Auth/Login";
+import { useSelector } from "react-redux";
 function Header() {
-  const credentials = false;
+  const credentials = useSelector((state) => state.user.userName);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -56,7 +57,7 @@ function Header() {
                 fontWeight: "bold",
               }}
             >
-              Adam Levin
+              {credentials}
             </Text>
           </>
         )}
