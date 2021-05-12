@@ -17,9 +17,8 @@ function Login({ closeDialog }) {
       if (closeDialog) {
         closeDialog();
       }
-      // do something here on register successfully
     } catch (err) {
-      console.log(err.message);
+      console.log(err.response);
     }
   };
   return (

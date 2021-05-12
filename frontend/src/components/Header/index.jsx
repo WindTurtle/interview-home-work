@@ -7,7 +7,7 @@ import Text from "antd/lib/typography/Text";
 import Login from "features/Auth/Login";
 import { useSelector } from "react-redux";
 function Header() {
-  const credentials = useSelector((state) => state.user.userName);
+  const data = useSelector((state) => state.user);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -42,7 +42,7 @@ function Header() {
         </Menu>
       </Col>
       <Col className="header__user" span={8}>
-        {!credentials ? (
+        {!data.userName ? (
           <Button type="primary" size="large" onClick={showModal}>
             Login
           </Button>
@@ -57,7 +57,7 @@ function Header() {
                 fontWeight: "bold",
               }}
             >
-              {credentials}
+              {data.userName}
             </Text>
           </>
         )}

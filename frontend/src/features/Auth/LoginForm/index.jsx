@@ -25,6 +25,7 @@ function LoginForm({ onSubmit }) {
     let { name, value } = event.target;
     setValues({ ...values, [name]: value });
   };
+
   const handleSubmit = async () => {
     if (onSubmit) {
       await onSubmit(values);
@@ -64,6 +65,7 @@ function LoginForm({ onSubmit }) {
         <Button type="primary" htmlType="submit" onClick={handleSubmit} block>
           Submit
         </Button>
+
         {/* Or <a href="#">register now!</a> */}
       </Form.Item>
     </Form>

@@ -6,10 +6,10 @@ import { userActions } from "../actions";
 function* signInRequest(action) {
   try {
     const user = yield call(userApi.signIn, action.payload);
-    const { data, message } = user;
-    yield put(userActions.signInSuccess(data[0], message));
+    const { data } = user;
+    yield put(userActions.signInSuccess(data[0]));
   } catch (error) {
-    yield put(userActions.signInSuccess({}));
+    yield put(userActions.signInSuccess(error));
   }
 }
 
@@ -19,7 +19,7 @@ function* signUpRequest(action) {
     const { data } = user;
     yield put(userActions.signUpSuccess(data));
   } catch (error) {
-    yield put(userActions.signUpSuccess({}));
+    yield put(userActions.signUpSuccess(error));
   }
 }
 

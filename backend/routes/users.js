@@ -113,6 +113,7 @@ router.route("/signin").post((req, res) => {
   userName = userName.trim();
   password = password.trim();
   if (userName == "" || password == "") {
+    res.status(401);
     res.json({
       status: "FAILED",
       message: "Empty credentials supplied!",
@@ -127,12 +128,14 @@ router.route("/signin").post((req, res) => {
             .compare(password, hashedPassword)
             .then((result) => {
               if (result) {
+                res.status(200);
                 res.json({
                   status: "SUCCESS",
                   message: "Signin successful",
                   data: data,
                 });
               } else {
+                res.status(401);
                 res.json({
                   status: "FAILED",
                   message: "Invalid username or password entered!",
@@ -140,12 +143,14 @@ router.route("/signin").post((req, res) => {
               }
             })
             .catch((err) => {
+              res.status(400);
               err.json({
                 status: "FAILED",
                 message: "An error occured while comparing password",
               });
             });
         } else {
+          res.status(401);
           res.json({
             status: "FAILED",
             message: "Invalid credentials entered!",
@@ -153,6 +158,7 @@ router.route("/signin").post((req, res) => {
         }
       })
       .catch((err) => {
+        res.status(400);
         res.json({
           status: "FAILED",
           message: "An error occured while checking for existing user",
